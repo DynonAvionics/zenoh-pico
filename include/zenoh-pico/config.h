@@ -222,7 +222,7 @@
  */
 #ifndef Z_BATCH_SIZE_RX
 #define Z_BATCH_SIZE_RX \
-    2048  // Warning: changing this value can break the communication
+    3072  // Warning: changing this value can break the communication
            //          with zenohd in the current protocol version.
            //          In the future, it will be possible to negotiate such value.
            // Change it at your own risk.
@@ -232,7 +232,7 @@
  * Defaulf maximum batch size possible to be sent.
  */
 #ifndef Z_BATCH_SIZE_TX
-#define Z_BATCH_SIZE_TX 2048
+#define Z_BATCH_SIZE_TX 3072
 #endif
 
 /**
