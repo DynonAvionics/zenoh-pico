@@ -30,11 +30,13 @@ int8_t _z_open_link(_z_link_t *zl, const char *locator) {
         // Create transport link
 #if Z_LINK_TCP == 1
         if (_z_endpoint_tcp_valid(&ep) == _Z_RES_OK) {
+            printf("link is Z_LINK_TCP\n");
             ret = _z_new_link_tcp(zl, &ep);
         } else
 #endif
 #if Z_LINK_UDP_UNICAST == 1
-            if (_z_endpoint_udp_unicast_valid(&ep) == _Z_RES_OK) {
+        if (_z_endpoint_udp_unicast_valid(&ep) == _Z_RES_OK) {
+            printf("link is Z_LINK_UDP_UNICAST\n");
             ret = _z_new_link_udp_unicast(zl, ep);
         } else
 #endif
@@ -152,7 +154,9 @@ int8_t _z_link_send_wbuf(const _z_link_t *link, const _z_wbuf_t *wbf) {
     for (size_t i = 0; (i < _z_wbuf_len_iosli(wbf)) || (ret == -1); i++) {
         _z_bytes_t bs = _z_iosli_to_bytes(_z_wbuf_get_iosli(wbf, i));
         size_t n = bs.len;
+        printf("bytes len = %d\n", bs.len);
         do {
+            printf("bs.start: %x\n", *bs.start);
             size_t wb = link->_write_f(link, bs.start, n);
             if (wb == SIZE_MAX) {
                 ret = _Z_ERR_TRANSPORT_TX_FAILED;

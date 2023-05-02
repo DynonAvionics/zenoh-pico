@@ -237,6 +237,17 @@ size_t _z_read_exact_udp_unicast(const _z_sys_net_socket_t sock, uint8_t *ptr, s
 
 size_t _z_send_udp_unicast(const _z_sys_net_socket_t sock, const uint8_t *ptr, size_t len,
                            const _z_sys_net_endpoint_t rep) {
+    printf("ALLO _z_send_udp_unicast\n");
+    struct sockaddr *lsockaddr = NULL;
+    unsigned int addrlen = sizeof(struct sockaddr_in);
+    if (getsockname(sock._fd, lsockaddr, &addrlen) != 0)
+    {
+        printf("sa data %s\n", lsockaddr->data);
+    }
+    else
+    {
+        printf("error getsockname\n");
+    }
     return sendto(sock._fd, ptr, len, 0, rep._iptcp->ai_addr, rep._iptcp->ai_addrlen);
 }
 #endif

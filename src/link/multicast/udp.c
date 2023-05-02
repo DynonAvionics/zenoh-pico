@@ -115,6 +115,7 @@ int8_t _z_f_link_open_udp_multicast(_z_link_t *self) {
     }
 
     const char *iface = _z_str_intmap_get(&self->_endpoint._config, UDP_CONFIG_IFACE_KEY);
+    printf("open udp multicast IFACE %s\n", iface);
     ret = _z_open_udp_multicast(&self->_socket._udp._sock, self->_socket._udp._rep, &self->_socket._udp._lep, tout,
                                 iface);
 

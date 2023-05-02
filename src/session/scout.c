@@ -31,6 +31,7 @@ _z_hello_list_t *__z_scout_loop(const _z_wbuf_t *wbf, const char *locator, unsig
     err = _z_endpoint_from_str(&ep, locator);
 
 #if Z_SCOUTING_UDP == 1
+    printf("YES Z_SCOUTING_UDP\n");
     if ((err == _Z_RES_OK) && (_z_str_eq(ep._locator._protocol, UDP_SCHEMA) == true)) {
         _z_endpoint_clear(&ep);
     } else
@@ -47,7 +48,9 @@ _z_hello_list_t *__z_scout_loop(const _z_wbuf_t *wbf, const char *locator, unsig
         err = _z_open_link(&zl, locator);
         if (err == _Z_RES_OK) {
             // Send the scout message
+            printf("Send the scout message\n");
             err = _z_link_send_wbuf(&zl, wbf);
+            printf("err = %d\n", err);
             if (err == _Z_RES_OK) {
                 // The receiving buffer
                 _z_zbuf_t zbf = _z_zbuf_make(Z_BATCH_SIZE_RX);
@@ -143,11 +146,13 @@ _z_hello_list_t *_z_scout_inner(const z_whatami_t what, const char *locator, con
     _Bool request_zid = true;
     _z_transport_message_t scout = _z_t_msg_make_scout(what, request_zid);
 
-    _z_transport_message_encode(&wbf, &scout);
+    int8_t err = _z_transport_message_encode(&wbf, &scout);
 
     // Scout on multicast
 #if Z_MULTICAST_TRANSPORT == 1
+    printf("before __z_scout_loop\n");
     ret = __z_scout_loop(&wbf, locator, timeout, exit_on_first);
+    printf("__z_scout_loop ERR = %d\n", err);
 #else
     (void)(locator);
     (void)(timeout);

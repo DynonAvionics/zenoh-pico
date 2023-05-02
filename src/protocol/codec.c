@@ -186,6 +186,8 @@ int8_t _z_zint_encode(_z_wbuf_t *wbf, _z_zint_t v) {
     }
 
     uint8_t c = lv & 0xff;
+    _Z_DEBUG("ENCODE v: %x\n", v);
+    _Z_DEBUG("ENCODE c: %x\n", c);
     return _z_wbuf_write(wbf, c);
 }
 
