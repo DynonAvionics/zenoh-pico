@@ -404,14 +404,14 @@ int8_t _z_listen_udp_multicast(_z_sys_net_socket_t *sock, const _z_sys_net_endpo
                     if (!mcast) {
                         ret = _Z_ERR_GENERIC;
                     }
-                    net_if_ipv4_maddr_join(mcast);
+                    net_if_ipv4_maddr_join(ifa, mcast);
                 } else if (rep._iptcp->ai_family == AF_INET6) {
                     struct net_if_mcast_addr *mcast = NULL;
                     mcast = net_if_ipv6_maddr_add(ifa, &((struct sockaddr_in6 *)rep._iptcp->ai_addr)->sin6_addr);
                     if (!mcast) {
                         ret = _Z_ERR_GENERIC;
                     }
-                    net_if_ipv6_maddr_join(mcast);
+                    net_if_ipv6_maddr_join(ifa, mcast);
                 } else {
                     ret = _Z_ERR_GENERIC;
                 }
@@ -439,7 +439,7 @@ void _z_close_udp_multicast(_z_sys_net_socket_t *sockrecv, _z_sys_net_socket_t *
         if (rep._iptcp->ai_family == AF_INET) {
             mcast = net_if_ipv4_maddr_add(ifa, &((struct sockaddr_in *)rep._iptcp->ai_addr)->sin_addr);
             if (mcast != NULL) {
-                net_if_ipv4_maddr_leave(mcast);
+                net_if_ipv4_maddr_leave(ifa, mcast);
                 net_if_ipv4_maddr_rm(ifa, &((struct sockaddr_in *)rep._iptcp->ai_addr)->sin_addr);
             } else {
                 // Do nothing. The socket will be closed in any case.
@@ -447,7 +447,7 @@ void _z_close_udp_multicast(_z_sys_net_socket_t *sockrecv, _z_sys_net_socket_t *
         } else if (rep._iptcp->ai_family == AF_INET6) {
             mcast = net_if_ipv6_maddr_add(ifa, &((struct sockaddr_in6 *)rep._iptcp->ai_addr)->sin6_addr);
             if (mcast != NULL) {
-                net_if_ipv6_maddr_leave(mcast);
+                net_if_ipv6_maddr_leave(ifa, mcast);
                 net_if_ipv6_maddr_rm(ifa, &((struct sockaddr_in6 *)rep._iptcp->ai_addr)->sin6_addr);
             } else {
                 // Do nothing. The socket will be closed in any case.
