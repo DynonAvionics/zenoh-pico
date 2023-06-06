@@ -207,7 +207,7 @@
  * Enable UDP Scouting.
  */
 #ifndef Z_SCOUTING_UDP
-#define Z_SCOUTING_UDP 1
+#define Z_SCOUTING_UDP 0
 #endif
 
 /**
