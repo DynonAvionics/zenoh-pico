@@ -179,7 +179,7 @@
  * Enable UDP Unicast links.
  */
 #ifndef Z_LINK_UDP_UNICAST
-#define Z_LINK_UDP_UNICAST 1
+#define Z_LINK_UDP_UNICAST 0
 #endif
 
 /**
